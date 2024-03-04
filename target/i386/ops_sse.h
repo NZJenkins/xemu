@@ -246,6 +246,12 @@ static inline int satub(int x)
     } else {
         return x;
     }
+
+    //0 if negative, all ones if positive
+    // int sign_mask = ~(x >> 31);
+    // int saturation_value = (255 - x) >> 31;
+
+    // return (((x & sign_mask) | (saturation_value & sign_mask)) & 255);
 }
 
 static inline int satuw(int x)
@@ -529,6 +535,37 @@ SSE_HELPER_S(mul, FPU_MUL)
 SSE_HELPER_S(div, FPU_DIV)
 SSE_HELPER_S(min, FPU_MIN)
 SSE_HELPER_S(max, FPU_MAX)
+
+// void helper_mulps_xmm(CPUX86State *env, ZMMReg *d, ZMMReg *v, ZMMReg *s)
+// {
+//     int i;
+//     for (i = 0; i < 2 << 1; i++) {
+//         d->ZMM_S(i) = float32_mul(v->ZMM_S(i), s->ZMM_S(i), &env->sse_status);
+//     }
+// }
+// void helper_mulpd_xmm(CPUX86State *env, ZMMReg *d, ZMMReg *v, ZMMReg *s)
+// {
+//     int i;
+//     for (i = 0; i < 1 << 1; i++) {
+//         d->ZMM_D(i) = float64_mul(v->ZMM_D(i), s->ZMM_D(i), &env->sse_status);
+//     }
+// }
+// void helper_mulss(CPUX86State *env, ZMMReg *d, ZMMReg *v, ZMMReg *s)
+// {
+//     int i;
+//     d->ZMM_S(0) = float32_mul(v->ZMM_S(0), s->ZMM_S(0), &env->sse_status);
+//     for (i = 1; i < 2 << 1; i++) {
+//         d->ZMM_L(i) = v->ZMM_L(i);
+//     }
+// }
+// void helper_mulsd(CPUX86State *env, ZMMReg *d, ZMMReg *v, ZMMReg *s)
+// {
+//     int i;
+//     d->ZMM_D(0) = float64_mul(v->ZMM_D(0), s->ZMM_D(0), &env->sse_status);
+//     for (i = 1; i < 1 << 1; i++) {
+//         d->ZMM_Q(i) = v->ZMM_Q(i);
+//     }
+// }
 
 void glue(helper_sqrtps, SUFFIX)(CPUX86State *env, Reg *d, Reg *s)
 {

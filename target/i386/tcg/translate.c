@@ -1724,6 +1724,12 @@ static void gen_enter_mmx(DisasContext *s)
         tcg_gen_st8_i32(v, cpu_env, offsetof(CPUX86State, fptags[0]) + i);
     }
     tcg_temp_free_i32(v);
+
+    // TCGv_i64 zero = tcg_const_i64(0);
+    // tcg_gen_st32_i64(zero, cpu_env, offsetof(CPUX86State, fptags[0]));
+    // tcg_gen_st32_i64(zero, cpu_env, offsetof(CPUX86State, fptags[0]) + 4);
+    // //tcg_gen_qemu_st64(zero, cpu_env, offsetof(CPUX86State, fptags[0]));
+    // tcg_temp_free_i64(zero);
 }
 
 static void gen_flds_FT0(DisasContext *s, TCGv_i32 arg)

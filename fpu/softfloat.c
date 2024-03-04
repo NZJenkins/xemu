@@ -349,21 +349,21 @@ float32_gen2(float32 xa, float32 xb, float_status *s,
     ua.s = xa;
     ub.s = xb;
 
-    if (unlikely(!can_use_fpu(s))) {
-        goto soft;
-    }
+    // if (unlikely(!can_use_fpu(s))) {
+    //     goto soft;
+    // }
 
-    float32_input_flush2(&ua.s, &ub.s, s);
-    if (unlikely(!pre(ua, ub))) {
-        goto soft;
-    }
+    //float32_input_flush2(&ua.s, &ub.s, s);
+    // if (unlikely(!pre(ua, ub))) {
+    //     goto soft;
+    // }
 
     ur.h = hard(ua.h, ub.h);
-    if (unlikely(f32_is_inf(ur))) {
-        float_raise(float_flag_overflow, s);
-    } else if (unlikely(fabsf(ur.h) <= FLT_MIN) && post(ua, ub)) {
-        goto soft;
-    }
+    // if (unlikely(f32_is_inf(ur))) {
+    //     float_raise(float_flag_overflow, s);
+    // } else if (unlikely(fabsf(ur.h) <= FLT_MIN) && post(ua, ub)) {
+    //     goto soft;
+    // }
     return ur.s;
 
  soft:
@@ -3261,7 +3261,8 @@ int16_t float32_to_int16(float32 a, float_status *s)
 
 int32_t float32_to_int32(float32 a, float_status *s)
 {
-    return float32_to_int32_scalbn(a, s->float_rounding_mode, 0, s);
+    //return float32_to_int32_scalbn(a, s->float_rounding_mode, 0, s);
+    return (int32_t)*((float*)&a);
 }
 
 int64_t float32_to_int64(float32 a, float_status *s)
